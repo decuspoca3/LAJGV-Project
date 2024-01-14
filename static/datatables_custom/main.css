@@ -1,0 +1,12 @@
+.pdf-icon{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f1c1"; /* Código del icono fas fa-file-pdf */
+    margin-right: 5px; /* Espacio a la derecha del icono */
+  }
+  
+
+/*para alinear los botones y cuadro de busqueda*/
+.btn-group, .btn-group-vertical {
+    position: absolute !important;
+}

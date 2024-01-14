@@ -1,0 +1,109 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'img/logo.png' %}"
+            type="image/x-icon">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.2.5/sweetalert2.min.js"></script>
+
+
+
+        <!-- Incluye el plugin slick -->
+        <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/body.css' %}">
+        <link href="{% static 'js/DataTables/datatables.min.css' %}"
+            rel="stylesheet"/>
+        <!-- libreria sweetalert2 -->
+        <link rel="stylesheet" href="{% static 'js/SweetAlert2/sweetalert2.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+
+        
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-icons/bootstrap-icons.css' %}">
+        <title> Lubricentro - {{ titulo }} </title>
+    </head>
+
+    <body class="hold-transition dark-mode sidebar-mini layout-fixed
+        layout-navbar-fixed layout-footer-fixed">
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center
+            align-items-center">
+            <img class="animation__wobble" src="{% static 'img/logo.png' %}"
+                alt="AdminLTELogo" height="200"
+                width="200">
+        </div>
+        <div class="wrapper">
+
+            {% include 'partials/header.html' %}
+            {% include 'partials/sidebar.html' %}
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container-fluid ">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0">{{titulo}} </h1>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
+                                    <li class="breadcrumb-item active">{{titulo}}
+                                    </li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <script type="text/javascript" src="{% static '/node_modules/accessibility/dist/main.bundle.js' %}"></script>
+                <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+               
+                    <div class="">
+                        {% block contenido %}
+
+                        {% endblock contenido %}
+                    </div>
+            </div>
+            {% include 'partials/modal.html' %}
+            {% include 'partials/footer.html' %}
+
+        </div>
+       
+        {% if messages %}
+        {% for message in messages %}
+            <script>
+                Swal.fire(
+                    {position: 'top-end',
+                toast: true,
+                showConfirmButton: false,
+                timer:10000,
+                timerProgressBar: true,
+                background: '#454d55',
+                color: '#ffffff',        
+                icon:'{{ message.tags }}',
+                text:'{{ message }}',
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }        });
+            </script>
+        {% endfor %}
+    {% endif %}
+
+    </body>
+   
+</html>

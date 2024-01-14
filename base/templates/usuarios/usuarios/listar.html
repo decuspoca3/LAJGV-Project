@@ -1,0 +1,105 @@
+{% extends 'partials/body.html' %}
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/datatables_custom/bootstrap/css/bootstrap.min.css">
+
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/static/datatables_custom/datatables/datatables.min.css"/>
+    <!--datables estilo bootstrap 4 CSS-->  
+    <link rel="stylesheet"  type="text/css" href="/static/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+       <!--font awesome con CDN-->  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  </head>
+{% block contenido %}
+{% if request.user.tipoUsuario == "Administrador" %}
+<div class="container-fluid m-5 d-flex flex-column mb-3">
+<div class="">
+    <a href="{% url 'inactivos' %}" class="btn btn-danger w-25">Usuarios Inactivos <i class="bi bi-person-fill-x"></i></a>    
+<img src="/static/img/logo1.png" alt="" class="logo" width="100px" high="100px">
+</div>
+<div >
+    <a href="{% url 'usuarios-crear' %}" class="btn btn-outline-light w-25">Crear {{titulo}}</a>
+
+    </div>
+</div>
+
+<div class="container-fluid mb-5">
+<table id="example" class="table table-hover ">
+    <thead>
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Tipo de Documento</th>
+            <th>Documento</th>
+            <th>Rh</th>
+            <th>Tipo Usuario</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for usuario in usuarios %}
+        {% if usuario.nombre != "" and usuario.direccion != "cra3 #4-5" %}
+        {% if usuario.estado != "0" %}
+
+        <tr> 
+        
+
+            
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.apellido}}</td>
+                <td>{{usuario.get_tipo_documento_display}}</td>
+                <td>{{usuario.documento}}</td>
+                <td>{{usuario.get_rh_display}}</td>
+                <td>{{usuario.get_tipoUsuario_display}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.telefono}}</td>
+                <td>{{usuario.direccion}}</td>
+                <td>
+                 
+               
+                    <a type="button"  title="Inactivar" class="btnEliminar btn btn-danger" href="{% url 'usuarios-eliminar' usuario.id %}" onclick="return confirm('¿Está seguro de inactivar el {{ titulo|lower }}?')">
+                        <i class="bi bi-person-fill-x"></i> </a>
+
+                  
+                    <a class="btn btn-primary"  title="Modificar" href="{% url 'usuarios-modificar' usuario.id %}"><i class="bi bi-pencil-square"></i></a>
+                </td>
+
+            </tr>
+            {% endif %}
+            {% endif %}
+
+        {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+<div class="container-fluid p-5">
+ 
+  
+</div>
+<script src="/static/datatables_custom/jquery/jquery-3.3.1.min.js"></script>
+ <script src="/static/datatables_custom/popper/popper.min.js"></script>
+ <script src="/static/datatables_custom/bootstrap/js/bootstrap.min.js"></script>
+   
+ <!-- datatables JS -->
+ <script type="text/javascript" src="/static/datatables_custom/datatables/datatables.min.js"></script>    
+  
+ <!-- para usar botones en datatables JS -->  
+ <script src="/static/datatables_custom/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>  
+ <script src="/static/datatables_custom/datatables/JSZip-2.5.0/jszip.min.js"></script>    
+ <script src="/static/datatables_custom/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>    
+ <script src="/static/datatables_custom/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+ <script src="/static/datatables_custom/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+ <!-- código JS propìo-->    
+ <script type="text/javascript" src="/static/datatables_custom/main.js"></script>
+
+{% endif %}
+
+{% endblock contenido %}
+    

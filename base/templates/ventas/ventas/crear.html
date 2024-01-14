@@ -1,0 +1,134 @@
+{% extends 'partials/body.html' %}
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/datatables_custom/bootstrap/css/bootstrap.min.css">
+
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/static/datatables_custom/datatables/datatables.min.css"/>
+    <!--datables estilo bootstrap 4 CSS-->  
+    <link rel="stylesheet"  type="text/css" href="/static/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+       <!--font awesome con CDN-->  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  </head>
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+<div class="row my-4">
+
+    <div class="col-md-3">
+
+        <div class="rounded card p-3">
+            {% if venta %}
+            
+            {% for p in venta %}
+              <form method="POST"  >
+                {% csrf_token %}
+                {{form_detalleventa|crispy}}
+                <input class="btn btn-outline-warning" type="submit" value="Agregar" name="form-detalleventa">
+                <a href="{% url 'ventas' %}" class="btn btn-outline-danger" data-url="{% url 'ventas' %}" >Volver</a>
+
+            </form>
+            {% endfor %}
+                
+                {% else %}
+    
+            <h4>Crear Venta</h4>
+            <hr>
+            <form  method="POST" >
+                {% csrf_token %}
+                {{ form_venta|crispy }}
+                <button class="btn btn-outline-warning btn-block" name="form-grupo">Abrir Venta</button>
+                <a href="{% url 'cliente-crear' %}" class="btn btn-outline-info btn-block">Crear Cliente<i class="bi bi-person-fill-add"></i></a>
+                <a class="btn btn-outline-danger btn-block" href="{% url 'ventas' %}" >Cancelar Venta</a>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+
+    
+    <div class="col-md-9">
+        <div class="card p-3">
+            <div class="card-header">
+                <h3 class="card-title">Detalle Venta</h3><br>
+                
+            </div>
+
+            <div class="card-body">
+                <table id="example" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th >Producto</th>
+                            <th>Cantidad</th>
+                            <th>Valor Total Unitario</th>
+                            <th style="width: 30%; text-align: center;">Acciones</th>
+                        </tr>
+                
+                    </thead>
+                    <tbody>
+                
+                        {% for detalleventa in detalleventas %}
+                
+                        
+                
+                        <tr>
+                            <td >{{detalleventa.producto}} </td>
+                            <td >{{detalleventa.cantidad}} </td>
+                            <td>${{detalleventa.valortotal_colombiano}}</td>
+
+
+                            
+                
+                            <td style="text-align: center;">
+                                <a  href="{% url 'detalleventa-eliminar' detalleventa.id %}"title="Eliminar" class="btnEliminar btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                            </td>
+                        </tr> 
+                        {% endfor %}
+                      
+                      
+                        <tr>
+                            <td style="text-align: center; border: none;"><b>Total a pagar:</b></td>
+                            <td style="text-align: center; border: none;"><b>${{ total_valores_colombiano }}</b></td>
+                            <td style="text-align: center; border: none;"></td> <!-- Deja esta celda en blanco en el pie de la tabla -->
+                            <td style="text-align: center; border: none;"></td>
+
+                        </tr>
+                    
+                        <tr>
+                            <td style="text-align: center; border: none;"><b>Cliente:</b></td>
+                            <td style="width: 30%; text-align: center; border: none;">
+                                {% for p in venta %}
+                                <b>{{p.Cliente}}</b></td>
+                                {% endfor %} 
+
+                            <td style="text-align: center; border: none;"></td> <!-- Deja esta celda en blanco en el pie de la tabla -->
+                            <td style="text-align: center; border: none;"></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/static/datatables_custom/jquery/jquery-3.3.1.min.js"></script>
+ <script src="/static/datatables_custom/popper/popper.min.js"></script>
+ <script src="/static/datatables_custom/bootstrap/js/bootstrap.min.js"></script>
+   
+ <!-- datatables JS -->
+ <script type="text/javascript" src="/static/datatables_custom/datatables/datatables.min.js"></script>    
+  
+ <!-- para usar botones en datatables JS -->  
+ <script src="/static/datatables_custom/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>  
+ <script src="/static/datatables_custom/datatables/JSZip-2.5.0/jszip.min.js"></script>    
+ <script src="/static/datatables_custom/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>    
+ <script src="/static/datatables_custom/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+ <script src="/static/datatables_custom/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+ <!-- código JS propìo-->    
+ <script type="text/javascript" src="/static/datatables_custom/main.js"></script>
+
+{% endblock contenido %}

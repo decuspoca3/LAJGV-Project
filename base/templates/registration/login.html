@@ -1,0 +1,67 @@
+{% extends 'partials/body-login.html' %}
+{% load static %}
+{% block contenido %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>login</title>
+</head>
+<body>
+    <section>
+        <div class=" form-box ">
+            <h2 style="position: absolute; top: 0; margin-bottom: 10px;">Pineda Motor's</h2>
+            <img src="{% static 'img/logo.png' %}"  alt=""  style="opacity: .8; width: 560px; height: 560px; margin: 5 auto 20px; display: block;">
+            <p style="position: absolute; top: 60%; left: 60%; transform: translate(-80%, 0); margin: 0; margin-top: 10px; text-align: center; color: #ffff;" >Para comenzar a usar nuestro servicio, por favor inicie sesión en su cuenta.</p>
+            <h2 style="position: absolute; bottom: 0; margin-top: 10px;">Lubricentro</h2>
+        </div>
+        <img src="{% static 'img/gota.png' %}" alt="" style="height: 200px; height: 200px;">
+        <div class="form-box" style="position: relative;">
+            <div class="form-value">
+                <form method="post">
+                    <h2>Login</h2>
+                    {% csrf_token %}
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <label for="">Usuario</label>
+                        <input type="text" name="{{ form.username.name }}" class="form-control" placeholder="Usuario">   
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline">contraseña</ion-icon>
+                        <label for="">Contraseña</label>
+                        <input type="password" name="{{ form.password.name }}" class="form-control" placeholder="Contraseña">
+                    </div>
+                    <div class="forget">
+                        <input type="checkbox" name="{{ form.RememberMeCheckbox.name }}" id="remember">
+                        <label for="remember">Recuérdame</label>
+                    </div>
+                    <button>Iniciar Sesión</button>
+                </form>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                    {% if form.username.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.username.errors }}
+                    </div>
+                    {% endif %}
+                    {% if form.password.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.password.errors }}
+                    </div>
+                    {% endif %}
+                    <p class="forget">
+                        <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+                    </p>   
+            </div>
+        </div>
+    </section>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
+
+{% endblock contenido %}

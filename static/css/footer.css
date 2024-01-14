@@ -1,0 +1,88 @@
+
+.formularios{
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+*{
+  overflow-x: hidden;
+}
+.circular._access-icon {
+  border-radius: hidden !important;
+  border: hidden !important;
+  overflow-x:  visible !important;
+}
+
+.swal2-toast {
+  flex-direction: row;
+  /* Alinea el icono y el texto */
+  align-items: center;
+  max-width: 300px; /* Limita el ancho total del toast */
+  overflow: hidden; /* Oculta el contenido que exceda el ancho */
+}
+.swal2-toast .swal2-icon {
+  margin-right: 10px; /* Aumenta el espacio entre el icono y el texto */
+}
+.swal2-icon {
+    overflow: hidden;
+  }
+
+
+::before{
+  visibility: hidden;
+}
+::after{
+  visibility: hidden;
+}
+
+i::before {
+  visibility: visible;
+}
+
+i::after {
+  visibility: visible;
+}
+button::before {
+  visibility: visible;
+}
+
+button::after {
+  visibility: visible;
+}
+
+li::before {
+  visibility: visible;
+}
+
+li::after {
+  visibility: visible;
+}
+
+td::before {
+  visibility: visible;
+}
+
+td::after {
+  visibility: visible;
+}
+footer::before {
+  visibility: visible;
+}
+
+footer::after {
+  visibility: visible;
+}
+
+._access-menu {
+  overflow-y: hidden;
+  }
+
+
+
+  @media screen and (max-width: 768px) {
+    *{
+      overflow-x: hidden !important;
+    }
+  }

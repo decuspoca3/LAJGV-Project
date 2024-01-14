@@ -1,0 +1,19 @@
+{% extends 'partials/body.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block contenido %}
+{% if request.user.tipoUsuario == "Administrador" %}
+<div class="formularios">
+    <form method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input class="btn btn-outline-warning" type="submit" value="Agregar {{titulo}}">
+        <a href="{% url 'usuarios' %}" class="btn btn-outline-danger" data-url="{% url 'usuarios' %}" > Cancelar</a>
+    </form>
+
+</div>
+{% endif %}
+
+{% endblock contenido %}
+    
